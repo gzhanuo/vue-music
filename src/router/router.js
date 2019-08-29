@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Recommend from '../views/Recommend'
-import Singer from '../views/Search'
+import Singer from '../views/Singer'
 import Rank from '../views/Rank'
 import Search from '../views/Search'
 

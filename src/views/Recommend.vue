@@ -35,9 +35,9 @@
 
 <script>
 // @ is an alias to /src
-import Slider from '../base/slider'
-import Scroll from '../base/scroll'
-import Loading from '../base/loading'
+import Slider from '../base/Slider'
+import Scroll from '../base/Scroll'
+import Loading from '../base/Loading'
 import {getRecommend, getDiscList} from '../api/recommend'
 import {ERR_OK} from '../api/config'
 
