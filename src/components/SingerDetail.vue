@@ -13,6 +13,7 @@ import {getSingerDetail, getVkey} from '../api/singer'
 import {ERR_OK} from '../api/config'
 import {createSong} from '../assets/js/song'
 import MusicList from './MusicList'
+import {getplaysongvkey} from '../api/singer'
 
 export default {
     name: 'SingerDetail',
@@ -51,9 +52,10 @@ export default {
             let ret = []
             list.forEach((item) => {
                 if(item.mid && item.album.mid) {
-                    getVkey(item.mid).then((res) => {
+                    let vkey = ''
+                    getplaysongvkey(item.mid).then((res) => {
                         if(res.code === ERR_OK) {
-                            const vkey = res.req_0.data.midurlinfo[0].vkey
+                            vkey = res.req_0.data.midurlinfo[0].purl
                             const newSong = createSong(item, vkey)
                             ret.push(newSong)
                         }

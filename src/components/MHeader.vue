@@ -18,7 +18,7 @@ export default {
     @import "../assets/stylus/mixin"
 
     .header
-        podition relative 
+        position relative 
         height 44px
         text-align center
         color $color-theme

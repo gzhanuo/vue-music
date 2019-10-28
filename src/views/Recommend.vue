@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="recommend" ref="recommend">
       <scroll class="recommend-content" :data="discList" ref="scroll">
           <div>
             <div v-if="recommends.length" class="slider-wrapper">
@@ -40,9 +40,11 @@ import Scroll from '../base/Scroll'
 import Loading from '../base/Loading'
 import {getRecommend, getDiscList} from '../api/recommend'
 import {ERR_OK} from '../api/config'
+import {playlistMixin} from '../assets/js/mixin'
 
 export default {
   name: 'Recommend',
+  mixins: [playlistMixin],
   data() {
       return {
           recommends: [],
@@ -60,24 +62,29 @@ export default {
   },
   methods: {
       _getRecommend() {
-          getRecommend().then((res) => {
-              if(res.code === ERR_OK) {
-                  this.recommends = res.data.slider
-              }
-          })
+            getRecommend().then((res) => {
+                if(res.code === ERR_OK) {
+                    this.recommends = res.data.slider
+                }
+            })
       },
       _getDiscList() {
-          getDiscList().then((res) => {
-              if(res.code === ERR_OK) {
-                  this.discList = res.data.list
-              }
-          })
+            getDiscList().then((res) => {
+                if(res.code === ERR_OK) {
+                    this.discList = res.data.list
+                }
+            })
+      },
+      handlePlaylist(playList) {
+            const bottom = playList.length > 0 ? '60px' : ''
+            this.$refs.recommend.style.bottom = bottom
+            this.$refs.scroll.refresh()
       },
       loadImage() {
-          if(!this.checkloaded) {
-              this.checkloaded = true
-              this.$refs.scroll.refresh()
-          }
+            if(!this.checkloaded) {
+                this.checkloaded = true
+                this.$refs.scroll.refresh()
+            }
       }
   }
 }

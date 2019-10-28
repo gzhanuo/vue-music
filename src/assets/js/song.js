@@ -1,3 +1,7 @@
+import {getLyric} from '../../api/song'
+import {ERR_OK} from '../../api/config'
+import {Base64} from 'js-base64'
+
 export default class Song {
     constructor({id, mid, singer, name, album, duration, img, url}) {
         this.id = id
@@ -8,6 +12,25 @@ export default class Song {
         this.duration = duration
         this.img = img
         this.url = url
+    }
+
+    getLyric() {
+        if(this.lyric) {
+            return Promise.resolve(this.lyric)
+        }
+
+        return new Promise((resolve, reject) => {
+            getLyric(this.mid).then((res) => {
+                if(res.retcode === ERR_OK) {
+                    this.lyric = Base64.decode(res.lyric)
+                    resolve(this.lyric)
+                    // eslint-disable-next-line no-console
+                    // console.log(this.lyric)
+                }else {
+                    reject('no lyric')
+                }
+            })
+        })
     }
 }
 
@@ -20,7 +43,7 @@ export function createSong(song, vkey) {
         album: song.album.name,
         duration: song.interval,
         img: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${song.album.mid}.jpg?max_age=2592000`,
-        url: `http://ws.stream.qqmusic.qq.com/C400${song.mid}.m4a?guid=6187608800&vkey=${vkey}&uin=0&fromtag=66`
+        url: `http://ws.stream.qqmusic.qq.com/${vkey}`
     })
 }
 
