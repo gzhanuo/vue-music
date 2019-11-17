@@ -1,22 +1,22 @@
 <template>
     <transition name="slide">
-        <music-list :songs="songList"
-            :title="title"
-            :bgImage="bgImage"
+        <music-list :title="title"
+                    :bgImage="bgImage"
+                    :songs="songList"
         ></music-list>
     </transition>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import {getSingerDetail} from '../api/singer'
-import {ERR_OK} from '../api/config'
-import {createSong} from '../assets/js/song'
 import MusicList from './MusicList'
+import {mapGetters} from 'vuex'
+import {getSongList} from '../api/recommend'
+import { ERR_OK } from '../api/config'
 import {getplaysongvkey} from '../api/singer'
+import {createSong} from '../assets/js/song'
 
 export default {
-    name: 'SingerDetail',
+    name: 'Disc',
     data() {
         return {
             songList: []
@@ -24,27 +24,24 @@ export default {
     },
     computed: {
         title() {
-            return this.singer.name
+            return this.disc.dissname
         },
         bgImage() {
-            return this.singer.picUrl
+            return this.disc.imgurl
         },
         ...mapGetters([
-            'singer'
+            'disc'
         ])
     },
-    created() {
-        this._getSingerDetail()
-    },
     methods: {
-        _getSingerDetail() {
-            if(!this.singer.id) {
-                this.$router.push('/singer')
+        _getSongList() {
+            if(!this.disc.dissid) {
+                this.$router.push('/recommend')
                 return
             }
-            getSingerDetail().then((res) => {
-                if(res.singer.code === ERR_OK) {
-                    this.songList = this._normalizeSongs(res.singer.data.songlist)
+            getSongList(this.disc.dissid).then((res) => {
+                if(res.code === ERR_OK) {
+                    this.songList = this._normalizeSongs(res.cdlist[0].songlist)
                 }
             })
         },
@@ -65,19 +62,20 @@ export default {
             return ret
         }
     },
+    created() {
+        this._getSongList()
+    },
     components: {
         MusicList
     }
 }
 </script>
 
-<style lang="stylus" scoped>
-    @import "../assets/stylus/variable"
-
-    .slide-enter-active,
+<style lang="stylus" scoped >
+    .slide-enter-avtive, 
     .slide-leave-active
         transition all 0.3s
-    .slide-enter,
+    .slide-enter, 
     .slide-leave-to
-        transform: translate3d(100%, 0, 0)
+        transform translate3d(100%, 0, 0)
 </style>

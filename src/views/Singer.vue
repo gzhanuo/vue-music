@@ -67,7 +67,7 @@ export default {
                         id: item.singer_id,
                         mid: item.singer_mid,
                         name: item.singer_name,
-                        picUrl: item.singer_pic
+                        // picUrl: item.singer_pic
                     }))
                 }
 
@@ -82,7 +82,7 @@ export default {
                     id: item.singer_id,
                     mid: item.singer_mid,
                     name: item.singer_name,
-                    picUrl: item.singer_pic
+                    // picUrl: item.singer_pic
                 }))
             })
             let hot = [],

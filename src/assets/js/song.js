@@ -36,13 +36,13 @@ export default class Song {
 
 export function createSong(song, vkey) {
     return new Song({
-        id: song.id,
-        mid: song.mid,
+        id: song.id && song.id || song.songid,
+        mid: song.mid && song.mid || song.songmid,
         singer: filterSinger(song.singer),
-        name: song.name,
-        album: song.album.name,
+        name: song.name && song.name || song.songname,
+        album: song.album && song.album.name || song.albumname,
         duration: song.interval,
-        img: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${song.album.mid}.jpg?max_age=2592000`,
+        img: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${song.album && song.album.mid || song.albummid}.jpg?max_age=2592000`,
         url: `http://ws.stream.qqmusic.qq.com/${vkey}`
     })
 }

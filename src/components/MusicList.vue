@@ -36,9 +36,7 @@ import Scroll from '../base/Scroll'
 import SongList from '../base/SongList'
 import Loading from '../base/Loading'
 import {prefixStyle} from '../assets/js/dom'
-import {mapActions, mapMutations} from 'vuex'
-import {getplaysongvkey} from '../api/singer'
-import {ERR_OK} from '../api/config'
+import {mapActions} from 'vuex'
 import {playlistMixin} from '../assets/js/mixin'
 
 const RESERVED_HEIGHT = 40
